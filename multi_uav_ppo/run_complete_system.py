@@ -84,7 +84,7 @@ def collect_baseline_data(env, num_episodes=3):
         
         while not done and step < 80:  # Limit steps for demo
             # Random actions (untrained behavior)
-            actions = [env.action_space.sample() for _ in range(env.num_uavs)]
+            actions = env.action_space.sample()
             obs, reward, done, info = env.step(actions)
             
             # Collect data points

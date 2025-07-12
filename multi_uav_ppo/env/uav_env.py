@@ -17,10 +17,16 @@ class MultiUAVEnv(gym.Env):
         # Action space: 0=up, 1=right, 2=down, 3=left, 4=stay
         self.action_space = spaces.MultiDiscrete([5] * num_uavs)
         
-        # Observation space: [uav_positions, visited_cells, battery_levels, target_locations]
+        # Observation space: [uav_positions, battery_levels, target_locations, visited_cells]
+        # uav_positions: num_uavs * 2 = 6
+        # battery_levels: num_uavs = 3  
+        # target_locations: 5 * 2 = 10
+        # visited_cells: grid_size * grid_size = 100
+        # Total: 6 + 3 + 10 + 100 = 119
+        obs_size = (num_uavs * 2) + num_uavs + (5 * 2) + (grid_size * grid_size)
         self.observation_space = spaces.Box(
             low=0, high=grid_size-1, 
-            shape=(num_uavs * 4 + grid_size * grid_size,), 
+            shape=(obs_size,), 
             dtype=np.float32
         )
         
@@ -128,7 +134,21 @@ class MultiUAVEnv(gym.Env):
         return self._get_observation(), rewards, done, {'metrics': self.metrics}
     
     def _move_uav(self, uav_id, action):
-        pos = self.uav_positions[uav_id]
+        # Convert action to scalar integer
+        if isinstance(action, (np.ndarray, list)):
+            if len(action) == 1:
+                action = int(action[0])
+            else:
+                action = int(action)  # Try direct conversion
+        elif hasattr(action, 'item'):
+            action = int(action.item())
+        else:
+            action = int(action)
+            
+        # Ensure action is valid (0-4)
+        action = max(0, min(4, action))
+            
+        pos = self.uav_positions[uav_id].copy()
         if action == 0 and pos[0] > 0:  # Up
             pos[0] -= 1
         elif action == 1 and pos[1] < self.grid_size - 1:  # Right
@@ -139,6 +159,8 @@ class MultiUAVEnv(gym.Env):
             pos[1] -= 1
         # action == 4 is stay (no movement)
         
+        # Update the UAV position
+        self.uav_positions[uav_id] = pos
         return pos
     
     def _calculate_energy_cost(self, old_pos, new_pos):

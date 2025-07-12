@@ -21,7 +21,7 @@ class RealTimeVisualizer:
         self.fig, self.ax = plt.subplots(figsize=(12, 8))
         self.animation_data = []
         
-    def create_html_visualization(self, simulation_data, output_file="../data/real_time_visualization.html"):
+    def create_html_visualization(self, simulation_data, output_file="./data/real_time_visualization.html"):
         """Create HTML-based real-time visualization"""
         html_content = f"""
 <!DOCTYPE html>
@@ -466,7 +466,7 @@ class RealTimeVisualizer:
         
         if save_gif:
             try:
-                anim.save('../data/uav_animation.gif', writer='pillow', fps=5)
+                anim.save('./data/uav_animation.gif', writer='pillow', fps=5)
                 print("Animation saved as GIF")
             except:
                 print("Could not save GIF (pillow not available)")
@@ -518,8 +518,8 @@ def main():
     
     print("\nVisualization complete!")
     print("Check the following files:")
-    print("- ../data/real_time_visualization.html (open in browser)")
-    print("- ../data/uav_animation.gif (if available)")
+    print("- ./data/real_time_visualization.html (open in browser)")
+    print("- ./data/uav_animation.gif (if available)")
 
 if __name__ == "__main__":
     main()

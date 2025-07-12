@@ -188,7 +188,7 @@ class UAV3DVisualizer:
         ax.view_init(elev=20, azim=45)
         
         if save_plot:
-            plt.savefig('../data/uav_3d_paths.png', dpi=300, bbox_inches='tight')
+            plt.savefig('./data/uav_3d_paths.png', dpi=300, bbox_inches='tight')
             print("Static 3D plot saved as PNG")
         
         return fig
@@ -215,7 +215,7 @@ class UAV3DVisualizer:
         ax.grid(True, alpha=0.3)
         
         if save_plot:
-            plt.savefig('../data/uav_altitude_profile.png', dpi=300, bbox_inches='tight')
+            plt.savefig('./data/uav_altitude_profile.png', dpi=300, bbox_inches='tight')
             print("Altitude profile saved as PNG")
         
         return fig
