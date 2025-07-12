@@ -24,6 +24,8 @@ def main():
         print("❌ Error: Please run this script from either:")
         print("   - /workspace (root directory)")
         print("   - /workspace/multi_uav_ppo")
+        print(f"   Current directory: {current_dir}")
+        print(f"   Available directories: {[d for d in os.listdir('.') if os.path.isdir(d)]}")
         return
     
     if not os.path.exists(script_path):
