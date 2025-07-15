@@ -1,0 +1,4 @@
+ID,source_time,lat,lon,source_spotted,track,takeoff_landing_time,battery,AoI,FLA
+UAV0,0,52.822992,-4.125736,1,270,0,0,14.0,200
+UAV1,0,52.815992,-4.129736,0,0,0,0,14.0,200
+UAV2,0,52.817992000000004,-4.122736,0,90,0,0,14.0,200
